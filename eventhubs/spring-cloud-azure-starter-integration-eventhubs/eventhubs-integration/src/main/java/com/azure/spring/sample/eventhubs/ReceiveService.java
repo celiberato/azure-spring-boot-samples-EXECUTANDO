@@ -30,6 +30,11 @@ public class ReceiveService {
     public void messageReceiver(byte[] payload, @Header(AzureHeaders.CHECKPOINTER) Checkpointer checkpointer) {
         String message = new String(payload);
         LOGGER.info("New message received: '{}'", message);
+
+        System.out.println("==============================================================");
+        System.out.println(String.format("New message received: %s", message));
+        System.out.println("==============================================================");
+ 
         checkpointer.success()
                 .doOnSuccess(s -> LOGGER.info("Message '{}' successfully checkpointed", message))
                 .doOnError(e -> LOGGER.error("Error found", e))
